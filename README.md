@@ -159,7 +159,7 @@ npm run test
 - SQLite path: if the DB file isn’t created, verify `DB_FILE_NAME` points to a writable path, e.g. `file:./data/todo.db` (create the `data/` folder if needed).
 - Ports in use: change `PORT` (backend) or `PORT` (frontend) env vars to free ports.
 
-### Decisions
+## Decisions
 
 - CORS via environment variable: CORS origin is configured through the `CORS_ORIGIN` env var in `backend/.env`, allowing flexible frontend URLs without code changes. Defaults to `http://localhost:5173` for local Vite dev.
 - Separate API models vs DB schema: Swagger `Todo` entity is a plain class for API typing, while Drizzle manages database schema separately—clear separation at the cost of duplication.
@@ -167,7 +167,7 @@ npm run test
 - Axios error normalization: A response interceptor standardizes errors to `{ message, status, data }`, simplifying UI error handling but masking some raw Axios details.
 - Map and Set for deletion timers: `useDeletionTimers` uses `Map<string, Timer>` for key-value pairs object with useful medoths and `Set<string>` for tracking deleting IDs without duplicates. More performant and semantically clear than arrays for this use case.
 
-### A&Q
+## A&Q
 
 1. Did you use AI at any stage while working on this task? Why?
 
