@@ -11,7 +11,7 @@ export function ApiCreate() {
       type: Todo,
     }),
     ApiResponse({
-      status: 409,
+      status: 400,
       description: 'Category already has 5 tasks.',
     }),
   );

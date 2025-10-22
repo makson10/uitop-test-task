@@ -16,7 +16,7 @@ export function ApiUpdate() {
       description: 'Todo not found',
     }),
     ApiResponse({
-      status: 409,
+      status: 400,
       description: 'Category limit reached when changing category',
     }),
   );

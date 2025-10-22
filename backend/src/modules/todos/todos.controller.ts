@@ -31,16 +31,16 @@ export class TodosController {
     return this.todosService.findAll(category);
   }
 
-  @Get(':id')
-  @ApiFindOne()
-  findOne(@Param('id') id: string): Promise<Todo> {
-    return this.todosService.findOne(id);
-  }
-
   @Get('categories')
   @ApiGetCategories()
   getCategories(): Promise<string[]> {
     return this.todosService.getCategories();
+  }
+
+  @Get(':id')
+  @ApiFindOne()
+  findOne(@Param('id') id: string): Promise<Todo> {
+    return this.todosService.findOne(id);
   }
 
   @Post()

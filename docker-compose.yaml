@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    env_file:
+      - ./frontend/.env
+    container_name: frontend
+    ports:
+      - '3000:3000'
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+      target: development
+    command: npm run start:prod
+    env_file:
+      - ./backend/.env
+    container_name: backend
+    ports:
+      - '4000:4000'
+    develop:
+      watch:
+        - path: ./src
+          action: sync
+          target: /app/src
+        - path: ./package.json
+          action: rebuild

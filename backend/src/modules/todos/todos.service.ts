@@ -1,5 +1,5 @@
 import {
-  ConflictException,
+  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,7 +8,7 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Todo } from './entities/todo.entity';
 import db from '../../common/db';
 import { todosTable } from '../../common/db/schema';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, sql, desc } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 
 @Injectable()
@@ -20,7 +20,11 @@ export class TodosService {
       ? sql`lower(${todosTable.category}) = lower(${category})`
       : undefined;
 
-    return await db.select().from(todosTable).where(whereClause);
+    return await db
+      .select()
+      .from(todosTable)
+      .where(whereClause)
+      .orderBy(desc(todosTable.createdAt));
   }
 
   async findOne(id: string): Promise<Todo> {
@@ -58,7 +62,7 @@ export class TodosService {
     const activeTodosCount = categoryTodos.length;
 
     if (activeTodosCount >= this.MAX_TODOS_PER_CATEGORY) {
-      throw new ConflictException(
+      throw new BadRequestException(
         `Category "${category}" already has ${this.MAX_TODOS_PER_CATEGORY} tasks. Please complete or delete an existing task first`,
       );
     }
@@ -131,7 +135,7 @@ export class TodosService {
       );
 
     if (categoryTodos.length >= this.MAX_TODOS_PER_CATEGORY) {
-      throw new ConflictException(
+      throw new BadRequestException(
         `Category "${category}" already has ${this.MAX_TODOS_PER_CATEGORY} tasks.`,
       );
     }
