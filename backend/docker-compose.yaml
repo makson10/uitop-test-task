@@ -1,0 +1,11 @@
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile
+      target: development
+    command: npm run start:prod
+    env_file:
+      - .env
+    container_name: backend
+    ports:
+      - '${PORT}:${PORT}'
